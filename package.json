@@ -1,5 +1,5 @@
 {
-  "name": "CreateProReadMe",
+  "name": "createreadme",
   "version": "1.0.0",
   "description": "[How to create a Professional README](./readme-guide.md)",
   "main": "index.js",
@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.20.0",
     "inquirer": "^6.5.2"
   },
   "repository": {

@@ -1,7 +1,8 @@
-const inquirer = require("inquirer")
-const axios = require("axios");
+const inquirer = require("inquirer");
 const fs = require('fs');
-const path = require('path');
+const axios = require("axios");
+var generateMarkdown = require("./utils/generateMarkdown")
+
 const questions = [
         {
             type: "input",
@@ -49,4 +50,20 @@ const questions = [
             name: "tests"
         }
         ];
-    
+        function init() {
+            inquirer.prompt(questions).then(answers => {
+              console.log(answers);
+              axios
+                .get("https://api.github.com/users/" + answers.username)
+                .then(response => {
+                  console.log(response);
+                  fs.writeFile("README.md", generateMarkdown(answers), function(err) {
+                    if (err) {
+                      throw err;
+                    }
+                  });
+                });
+            });
+          }
+          
+          init();
