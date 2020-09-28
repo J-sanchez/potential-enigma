@@ -10,11 +10,11 @@ const questions = [
         type: "input",
         message: "What is your GitHub user name?",
         name: "username"
-      },   
+      }, 
       {
         type: "input",
         message: "What is your GitHub URL?",
-        name: "Link"
+        name: "link"
       }, 
     {
         type: "input",

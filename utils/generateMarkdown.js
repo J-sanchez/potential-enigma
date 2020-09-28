@@ -28,7 +28,7 @@ ${data.license}
 ## Test
 ${data.tests}
 ### Contact Me
-${data.email}
+${data.Email}
 ### Link to Github
 ${data.link}
 `;

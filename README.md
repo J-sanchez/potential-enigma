@@ -26,6 +26,6 @@ MIT License
 ## Test
 At this time I will not provide examples on how to run tests.
 ### Contact Me
-undefined
+jonathan.sanchez@windstream.net
 ### Link to Github
-undefined
+https://github.com/J-sanchez
