@@ -14,17 +14,23 @@ ${data.desc}
 * [Author] (#Author)
 * [Badges](#badges)
 ## Installation
-${data.install}
+${data.instruction}
 ## Usage
-${data.usage}
+${data.Usage}
 ## Contributors
-${data.contributors}
-## Test
-${data.test}
+${data.Collaborators}
+## If you wish to contribute
+${data.contributing}
 ## Questions
 If you have any questions, contact ${data.username} on GitHub.
 ## License
-MIT License
+${data.license}
+## Test
+${data.tests}
+### Contact Me
+${data.email}
+### Link to Github
+${data.link}
 `;
 }
 

@@ -1,18 +1,30 @@
+const util = require("util")
 const inquirer = require("inquirer");
 const fs = require('fs');
 const axios = require("axios");
-var generateMarkdown = require("./utils/generateMarkdown")
+const generateMarkdown = require("./utils/generateMarkdown");
+const api = require("./utils/user");
 
 const questions = [
-        {
-            type: "input",
+    {
+        type: "input",
+        message: "What is your GitHub user name?",
+        name: "username"
+      },   
+      {
+        type: "input",
+        message: "What is your GitHub URL?",
+        name: "Link"
+      }, 
+    {
+        type: "input",
             message: "What is your Project Title?",
-            name: "Title"
-        },
+        name: "title"
+            },
         {
             type: "input",
             message: "Provide with a detailed description.",
-            name: "Description"
+            name: "desc"
         },
         {
             type: "input",
@@ -35,9 +47,10 @@ const questions = [
             name: "Collaborators"
         },
         {
-            type: "input",
-            message: "What License was used? Provide license ",
-            name: "license"
+            type: 'list',
+            message: "Choose a license for your project.",
+            choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla Public License 2.0', 'Apache License 2.0', 'MIT License', 'Boost Software License 1.0', 'The Unlicense'],
+            name: 'license'
         },
         {
             type: "input",
@@ -46,24 +59,49 @@ const questions = [
         },
         {
             type: "input",
+            message: "Enter your email",
+            name: "Email"
+        },
+        {
+            type: "input",
             message: "Provide examples on how to run tests.",
             name: "tests"
         }
         ];
-        function init() {
-            inquirer.prompt(questions).then(answers => {
-              console.log(answers);
-              axios
-                .get("https://api.github.com/users/" + answers.username)
-                .then(response => {
-                  console.log(response);
-                  fs.writeFile("README.md", generateMarkdown(answers), function(err) {
-                    if (err) {
-                      throw err;
-                    }
-                  });
-                });
+
+        function writeToFile(fileName, data) {
+            fs.writeFile(fileName, data, err => {
+                if (err) {
+                  return console.log(err);
+                }
+              
+                console.log("Success! Your README.md file has been generated")
             });
-          }
-          
-          init();
+        }
+        
+        const writeFileAsync = util.promisify(writeToFile);
+        
+        
+        async function init() {
+            try {
+        
+                // Prompt Inquirer questions
+                const userResponses = await inquirer.prompt(questions);
+                console.log("Your responses: ", userResponses);
+                console.log("Getting Github Repo");
+            
+                const userInfo = await api.getUser(userResponses);
+                console.log("Your GitHub user info: ", userInfo);
+            
+                console.log("Generating your README next...")
+                const markdown = generateMarkdown(userResponses, userInfo);
+                console.log(markdown);
+            
+                await writeFileAsync('README.md', markdown);
+        
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        
+        init();
